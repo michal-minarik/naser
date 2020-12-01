@@ -1,5 +1,7 @@
 # Automatic Reporting for System Engineers (A.R.S.E.)
 
+[Installation](https://github.com/michal-minarik/arse#installation)
+[Getting Started](https://github.com/michal-minarik/arse#getting-started)
 
 # Installation
 
@@ -98,6 +100,8 @@ Download the arse.py script from this repository also download the sample_input.
 
 # Getting started
 
+## Basic usage
+
 You are all set to run the script. Navigate to the directory where you saved the script and execute:
 
 ```bash
@@ -135,3 +139,13 @@ That's it. Now the script will open a controlled Firefox browser and load all th
 ```bash
 Reporting done
 ```
+
+## Input file structure
+
+Currently the input file is supporting following fields:
+
+| Field  | Decription | Possible values | 
+| ------------- | ------------- | ------------- |
+| date  | Activity date to be logged  | Date |
+| type  | Type of the SFDC activity  | Workshop, PoC / PoV |
+| summary  | Activity summary  | Text |
