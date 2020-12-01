@@ -91,3 +91,47 @@ testing/geckodriver in https://hg.mozilla.org/mozilla-central.
 This program is subject to the terms of the Mozilla Public License 2.0.
 You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 ```
+
+## Download the script
+
+Download the arse.py script from this repository also download the sample_input.xlsx file and save as input.xlsx in the same directory where you have the script.
+
+# Getting started
+
+You are all set to run the script. Navigate to the directory where you saved the script and execute:
+
+```bash
+python ./arse.py
+```
+
+The script will recap, what it will import into SFDC.
+
+
+```bash
+Tasks to be reported:
+
+-----------------------------------------------
+        date       type      summary  hours                  link_to     status
+0 2020-10-20   Workshop  Hello world      2  some oppty                  Completed
+1 2020-10-20  PoC / PoV     John Doe      8  another opty                Completed
+-----------------------------------------------
+```
+
+Then it will autodetect your username and prompts for a password. This password is your domain password.
+
+```bash
+Your VMware username: ********
+Password: 
+```
+
+Next step is to confirm you date/time format you SFDC is expecting. For example in my case, SFDC uses Czech date format 30.11.2020 so I am OK with the defaults and I can just hit enter. If you are using diffent format you will need to specify it.
+
+```bash
+Your SFDC date format (default: %d.%m.%Y):
+```
+
+That's it. Now the script will open a controlled Firefox browser and load all the tasks. Once it's done you will see the message:
+
+```bash
+Reporting done
+```
