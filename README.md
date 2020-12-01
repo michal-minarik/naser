@@ -40,11 +40,29 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 
 ## Install selenium and pandas libraries
 
-Just run those two commands:
+Check if you have pandas module installed:
+
+```bash
+pip list | grep pandas
+
+pandas            1.1.4
+```
+
+If not run this command:
 
 ```bash 
 pip install pandas
 ``` 
+
+Check if you have selenium module installed:
+
+```bash
+pip list | grep selenium
+
+selenium          3.141.0
+```
+
+If not run this command:
 
 ```bash 
 pip install selenium
