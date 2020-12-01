@@ -5,7 +5,17 @@
 
 ## Install Python
 
-You can check that by running a simple python -V command in your shell. The output should be something like: Python 3.8.5.
+Check that you are running a Python on your machine. Open a terminal and execute:
+
+```bash
+python -V
+
+Python 3.8.5
+```
+
+If you don't have Python on your machine install it by following the official documentation: https://www.python.org/downloads/
+
+If you are running 2.X version of Python upgrade it.
 
 ## Install pip
 
@@ -15,6 +25,7 @@ You can check if you have a pip installed:
 
 ```bash
 python -m pip --version
+
 pip 20.2.4 from /usr/local/lib/python3.8/site-packages/pip (python 3.8)
 ``` 
 
@@ -65,4 +76,18 @@ echo $PATH | tr ":" "\n"
 /Applications/VMware Fusion.app/Contents/Public
 /Library/Apple/usr/bin
 /Library/Frameworks/Mono.framework/Versions/Current/Commands
+```
+
+And you should also see this:
+
+```bash
+geckodriver -V 
+
+geckodriver 0.28.0 (c00d2b6acd3f 2020-11-03 16:29 +0200)
+
+The source code of this program is available from
+testing/geckodriver in https://hg.mozilla.org/mozilla-central.
+
+This program is subject to the terms of the Mozilla Public License 2.0.
+You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 ```
