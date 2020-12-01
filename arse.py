@@ -85,7 +85,7 @@ for index, row in df.iterrows():
 	usernameField = browser.find_element_by_id("tsk4")
 	usernameField.send_keys(row.date.strftime("%d.%m.%Y"))
 
-	relatedObjectSelect = Select(browser.find_element_by_id('tsk12'))
+	relatedObjectSelect = Select(browser.find_element_by_id('tsk3_mlktp'))
 	relatedObjectSelect.select_by_visible_text(row.related_object)
 
 	linkToField = browser.find_element_by_id("tsk3")

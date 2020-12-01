@@ -115,9 +115,9 @@ The script will recap, what it will import into SFDC.
 Tasks to be reported:
 
 -----------------------------------------------
-        date       type      subject  hours                  related_to     status
-0 2020-10-20   Workshop  Hello world      2  some oppty                  Completed
-1 2020-10-20  PoC / PoV     John Doe      8  another opty                Completed
+        date      type      subject  hours related_object        related_to     status
+0 2020-10-20  Workshop  Hello world      2        Account               ***  Completed
+1 2020-10-21  Workshop  Hello world      2    Opportunity               ***  Completed
 -----------------------------------------------
 ```
 
@@ -150,6 +150,7 @@ Currently the input file is supporting following fields:
 | type  | Type of the SFDC activity  | see section [possible type values](https://github.com/michal-minarik/arse#possible-type-values) |
 | subject  | Activity subject  | Text |
 | hours  | Worked hours  | Integer |
+| related_object  | Related to SFDC type  | see section [possible related_object values](https://github.com/michal-minarik/arse#possible-related_object-values)  |
 | related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) |
 | status  | Task status  | see section [possible status values](https://github.com/michal-minarik/arse#possible-status-values)  |
 
@@ -184,6 +185,11 @@ Currently the input file is supporting following fields:
 - Virtual Customer Lab
 - VMware Marketing Events
 - Workshop
+
+### Possible related_object values
+
+- Account
+- Opportunity
 
 ### Possible status values
 
