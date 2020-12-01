@@ -133,11 +133,11 @@ The script will recap, what it will import into SFDC.
 ```bash
 Tasks to be reported:
 
------------------------------------------------
+------------
         date      type      subject  hours related_object        related_to     status
 0 2020-10-20  Workshop  Hello world      2        Account               ***  Completed
 1 2020-10-21  Workshop  Hello world      2    Opportunity               ***  Completed
------------------------------------------------
+------------
 ```
 
 Then it will autodetect your username and prompts for a password. This password is your domain password.
@@ -161,22 +161,22 @@ Reporting done
 
 ## Input file structure
 
-Currently the input file is supporting following fields:
+### Field for EMEA SE Activity
+
+Following fields are mandatory and must be filled:
 
 | Field  | Decription | Value | 
 | ------------- | ------------- | ------------- |
 | date  | Activity date | Date |
-| activity  | Internal or normal activity definition  | EMEA SE Activity or SE Internal Activity |
-| type  | Type of the SFDC activity  | see section [possible type values](https://github.com/michal-minarik/arse#possible-type-values) |
+| activity  | Internal or normal activity definition  | EMEA SE Activity |
+| type  | Type of the SFDC activity  | [EMEA SE Activity - type values](https://github.com/michal-minarik/arse#possible-type-values) |
 | subject  | Activity subject  | Text |
 | hours  | Worked hours  | Integer |
-| related_object  | Related to SFDC type  | See section [possible related_object values](https://github.com/michal-minarik/arse#possible-related_object-values) - does nothing for SE Internal Activity |
-| related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) - does nothing for SE Internal Activity |
-| status  | Task status  | see section [possible status values](https://github.com/michal-minarik/arse#possible-status-values)  |
+| related_object  | Related to SFDC type  | [EMEA SE Activity - related_object values](https://github.com/michal-minarik/arse#possible-related_object-values) |
+| related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) |
+| status  | Task status  | [EMEA SE Activity - status values](https://github.com/michal-minarik/arse#possible-status-values)  |
 
-### Possible type values
-
-**For EMEA SE Activity**
+#### EMEA SE Activity - type values
 
 - Account Management
 - App Domain Architecture
@@ -208,7 +208,32 @@ Currently the input file is supporting following fields:
 - VMware Marketing Events
 - Workshop
 
-**For SE Internal Activity**
+#### EMEA SE Activity - related_object values
+
+- Account
+- Opportunity
+
+#### EMEA SE Activity - status values
+
+- Not Started
+- In Progress
+- Completed
+
+### Field for SE Internal Activity
+
+Following fields are mandatory and must be filled:
+
+| Field  | Decription | Value | 
+| ------------- | ------------- | ------------- |
+| date  | Activity date | Date |
+| activity  | Internal or normal activity definition  | SE Internal Activity |
+| type  | Type of the SFDC activity  | [SE Internal Activity - type values](https://github.com/michal-minarik/arse#possible-type-values) |
+| subject  | Activity subject  | Text |
+| hours  | Worked hours  | Integer |
+| status  | Task status  | [SE Internal Activity - status values](https://github.com/michal-minarik/arse#possible-status-values)  |
+
+
+#### SE Internal Activity - type values
 
 - Admin
 - Conferences
@@ -224,12 +249,7 @@ Currently the input file is supporting following fields:
 - Service Learning
 - Training
 
-### Possible related_object values
-
-- Account
-- Opportunity
-
-### Possible status values
+#### SE Internal Activity - status values
 
 - Not Started
 - In Progress

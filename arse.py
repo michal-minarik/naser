@@ -27,9 +27,9 @@ for arg in sys.argv:
 df = pd.read_excel('input.xlsx')
 
 print('\nTasks to be reported:')
-print('\n-----------------------------------------------')
+print('\n------------')
 print(df)
-print('-----------------------------------------------\n')
+print('------------\n')
 
 # Get the username and password
 if promptUsername is True:
