@@ -1,7 +1,7 @@
 # Automatic Reporting for System Engineers (A.R.S.E.)
 
-[Installation](https://github.com/michal-minarik/arse#installation)
-[Getting Started](https://github.com/michal-minarik/arse#getting-started)
+- [Installation](https://github.com/michal-minarik/arse#installation)
+- [Getting Started](https://github.com/michal-minarik/arse#getting-started)
 
 # Installation
 
