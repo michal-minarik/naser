@@ -144,16 +144,16 @@ Reporting done
 
 Currently the input file is supporting following fields:
 
-| Field  | Decription | Possible values | 
+| Field  | Decription | Value | 
 | ------------- | ------------- | ------------- |
 | date  | Activity date to be logged  | Date |
-| type  | Type of the SFDC activity  | see section possible TYPE values |
+| type  | Type of the SFDC activity  | see section [possible type values](https://github.com/michal-minarik/arse#possible-type-values) |
 | subject  | Activity subject  | Text |
 | hours  | Worked hours  | Integer |
 | related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) |
-| status  | Task status  | Value should be one of following: Completed,  |
+| status  | Task status  | see section [possible status values](https://github.com/michal-minarik/arse#possible-status-values)  |
 
-### Possible TYPE values
+### Possible type values
 
 - Account Management
 - App Domain Architecture
@@ -184,3 +184,9 @@ Currently the input file is supporting following fields:
 - Virtual Customer Lab
 - VMware Marketing Events
 - Workshop
+
+### Possible status values
+
+- Not Started
+- In Progress
+- Completed
