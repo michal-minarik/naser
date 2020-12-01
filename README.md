@@ -161,7 +161,7 @@ Reporting done
 
 ## Input file structure
 
-### Field for EMEA SE Activity
+### Fields for EMEA SE Activity
 
 Following fields are mandatory and must be filled:
 
@@ -169,12 +169,12 @@ Following fields are mandatory and must be filled:
 | ------------- | ------------- | ------------- |
 | date  | Activity date | Date |
 | activity  | Internal or normal activity definition  | EMEA SE Activity |
-| type  | Type of the SFDC activity  | [EMEA SE Activity - type values](https://github.com/michal-minarik/arse#possible-type-values) |
+| type  | Activity type  | [EMEA SE Activity - type values](https://github.com/michal-minarik/arse#emea-se-activity---type-values) |
 | subject  | Activity subject  | Text |
 | hours  | Worked hours  | Integer |
-| related_object  | Related to SFDC type  | [EMEA SE Activity - related_object values](https://github.com/michal-minarik/arse#possible-related_object-values) |
+| related_object  | Related to SFDC type  | [EMEA SE Activity - related_object values](https://github.com/michal-minarik/arse#emea-se-activity---related_object-values) |
 | related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) |
-| status  | Task status  | [EMEA SE Activity - status values](https://github.com/michal-minarik/arse#possible-status-values)  |
+| status  | Task status  | [EMEA SE Activity - status values](https://github.com/michal-minarik/arse#emea-se-activity---status-values)  |
 
 #### EMEA SE Activity - type values
 
@@ -219,7 +219,7 @@ Following fields are mandatory and must be filled:
 - In Progress
 - Completed
 
-### Field for SE Internal Activity
+### Fields for SE Internal Activity
 
 Following fields are mandatory and must be filled:
 
@@ -227,10 +227,10 @@ Following fields are mandatory and must be filled:
 | ------------- | ------------- | ------------- |
 | date  | Activity date | Date |
 | activity  | Internal or normal activity definition  | SE Internal Activity |
-| type  | Type of the SFDC activity  | [SE Internal Activity - type values](https://github.com/michal-minarik/arse#possible-type-values) |
+| type  | Activity type  | [SE Internal Activity - type values](https://github.com/michal-minarik/arse#se-internal-activity---type-values) |
 | subject  | Activity subject  | Text |
 | hours  | Worked hours  | Integer |
-| status  | Task status  | [SE Internal Activity - status values](https://github.com/michal-minarik/arse#possible-status-values)  |
+| status  | Task status  | [SE Internal Activity - status values](https://github.com/michal-minarik/arse#se-internal-activity---status-values)  |
 
 
 #### SE Internal Activity - type values
