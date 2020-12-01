@@ -80,13 +80,13 @@ for index, row in df.iterrows():
 
 	# Fill the form
 	usernameField = browser.find_element_by_id("tsk5")
-	usernameField.send_keys(row.summary)
+	usernameField.send_keys(row.subject)
 
 	usernameField = browser.find_element_by_id("tsk4")
 	usernameField.send_keys(row.date.strftime("%d.%m.%Y"))
 
 	linkToField = browser.find_element_by_id("tsk3")
-	linkToField.send_keys(row.link_to)
+	linkToField.send_keys(row.related_to)
 
 	activityTypeSelect = Select(browser.find_element_by_id('00N80000004k1L2'))
 	activityTypeSelect.select_by_value(row.type)

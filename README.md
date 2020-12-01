@@ -115,7 +115,7 @@ The script will recap, what it will import into SFDC.
 Tasks to be reported:
 
 -----------------------------------------------
-        date       type      summary  hours                  link_to     status
+        date       type      subject  hours                  related_to     status
 0 2020-10-20   Workshop  Hello world      2  some oppty                  Completed
 1 2020-10-20  PoC / PoV     John Doe      8  another opty                Completed
 -----------------------------------------------
@@ -134,7 +134,7 @@ Next step is to confirm you date/time format you SFDC is expecting. For example 
 Your SFDC date format (default: %d.%m.%Y):
 ```
 
-That's it. Now the script will open a controlled Firefox browser and load all the tasks. Once it's done you will see the message:
+That's it. Now the script will open a controlled Firefox browser and load all the tasks (as EMEA SE Activity taks). Once it's done you will see the message:
 
 ```bash
 Reporting done
@@ -147,5 +147,40 @@ Currently the input file is supporting following fields:
 | Field  | Decription | Possible values | 
 | ------------- | ------------- | ------------- |
 | date  | Activity date to be logged  | Date |
-| type  | Type of the SFDC activity  | Workshop, PoC / PoV |
-| summary  | Activity summary  | Text |
+| type  | Type of the SFDC activity  | see section possible TYPE values |
+| subject  | Activity subject  | Text |
+| hours  | Worked hours  | Integer |
+| related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) |
+| status  | Task status  | Value should be one of following: Completed,  |
+
+### Possible TYPE values
+
+- Account Management
+- App Domain Architecture
+- Beta Program / Mgmt
+- Customer Adopt
+- Customer Reference
+- Dell Technologies Play
+- Demo
+- DICE
+- DOMINO
+- Champions - SME program
+- Live Optics
+- Non VMware Marketing Event (Inc. VMUG)
+- Partner Management
+- Partner Presales Centre
+- PoC / PoV
+- Post Sales Support
+- PowerBlocks
+- Pre-Sales PSO / Scoping
+- Pre-Sales Support
+- Presentation
+- Projects
+- RFI / RFP / RFQ
+- Roadmap
+- Self Driving Ops
+- Trial
+- VBC
+- Virtual Customer Lab
+- VMware Marketing Events
+- Workshop
