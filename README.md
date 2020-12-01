@@ -1,4 +1,4 @@
-# Automatic Reporting for System Engineers (A.R.S.E.)
+# Automated Reporting for System Engineers (A.R.S.E.)
 
 - [Installation](https://github.com/michal-minarik/arse#installation)
 - [Getting Started](https://github.com/michal-minarik/arse#getting-started)
@@ -146,15 +146,18 @@ Currently the input file is supporting following fields:
 
 | Field  | Decription | Value | 
 | ------------- | ------------- | ------------- |
-| date  | Activity date to be logged  | Date |
+| date  | Activity date | Date |
+| activity  | Internal or normal activity definition  | EMEA SE Activity or SE Internal Activity |
 | type  | Type of the SFDC activity  | see section [possible type values](https://github.com/michal-minarik/arse#possible-type-values) |
 | subject  | Activity subject  | Text |
 | hours  | Worked hours  | Integer |
-| related_object  | Related to SFDC type  | see section [possible related_object values](https://github.com/michal-minarik/arse#possible-related_object-values)  |
-| related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) |
+| related_object  | Related to SFDC type  | See section [possible related_object values](https://github.com/michal-minarik/arse#possible-related_object-values) - does nothing for SE Internal Activity |
+| related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) - does nothing for SE Internal Activity |
 | status  | Task status  | see section [possible status values](https://github.com/michal-minarik/arse#possible-status-values)  |
 
 ### Possible type values
+
+**For EMEA SE Activity**
 
 - Account Management
 - App Domain Architecture
@@ -185,6 +188,22 @@ Currently the input file is supporting following fields:
 - Virtual Customer Lab
 - VMware Marketing Events
 - Workshop
+
+**For SE Internal Activity**
+
+- Admin
+- Conferences
+- Demo
+- Champions - SME program
+- Internal Enablement
+- Internal Event Support
+- Management or Team Activities
+- Meetings
+- Paid Time Off, Holiday
+- POC
+- Recruiting
+- Service Learning
+- Training
 
 ### Possible related_object values
 
