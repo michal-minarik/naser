@@ -2,6 +2,7 @@
 
 - [Installation](https://github.com/michal-minarik/arse#installation)
 - [Getting Started](https://github.com/michal-minarik/arse#getting-started)
+- [Advanced Parameters](https://github.com/michal-minarik/arse#advanced-parameters)
 
 # Installation
 
@@ -215,3 +216,11 @@ Currently the input file is supporting following fields:
 - Not Started
 - In Progress
 - Completed
+
+# Advanced parameters
+
+If the script does not detect your username correctly (for example you are not running corporate image), you can force a username prompt:
+
+```bash
+python arse.py --prompt-username
+```

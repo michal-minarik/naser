@@ -4,6 +4,7 @@
 # version 1.0
 #
 
+import sys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -17,6 +18,11 @@ print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.0')
 print('*******************************************************************')
 
 dateFormat = "%d.%m.%Y"
+promptUsername = False
+
+for arg in sys.argv:
+	if str(arg) == "--prompt-username":
+		promptUsername = True
 
 df = pd.read_excel('input.xlsx')
 
@@ -26,8 +32,12 @@ print(df)
 print('-----------------------------------------------\n')
 
 # Get the username and password
-username = getpass.getuser()
-print('Your VMware username: ' + username)
+if promptUsername is True:
+	print('Your VMware username:')
+	username = input()
+else:
+	username = getpass.getuser()
+	print('Your VMware username: ' + username)
 password = getpass.getpass()
 
 # Set the date format for SFDC
