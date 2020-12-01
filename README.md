@@ -40,5 +40,29 @@ pip install selenium
 
 Assuming you have Firefox on your computer the reporting script will need driver to control the browser.
 
-Download a driver here and add it to your PATH variable: https://github.com/mozilla/geckodriver/releases
+Download the lastest driver here: https://github.com/mozilla/geckodriver/releases
 
+Whereever you will save the Firefox driver you will need to reference it in you PATH variable. For example if the file is in /Users/mminarik/python directory I would need to add this line into my terminal configuration file (~/.bash_profile).
+
+```bash
+export PATH="/Users/mminarik/python:$PATH"
+```
+
+After that you will need to close and reopen your terminal window. You can verify you did it correctly by finding the path in the output of this command:
+
+```bash
+echo $PATH | tr ":" "\n"
+
+/Users/mminarik/python
+/usr/local/opt/libpq/bin
+/usr/local/Cellar/python/3.6.5_1/Frameworks/Python.framework/Versions/3.6/bin
+/usr/local/sbin
+/usr/local/bin
+/usr/bin
+/bin
+/usr/sbin
+/sbin
+/Applications/VMware Fusion.app/Contents/Public
+/Library/Apple/usr/bin
+/Library/Frameworks/Mono.framework/Versions/Current/Commands
+```
