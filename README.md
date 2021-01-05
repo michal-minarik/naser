@@ -2,6 +2,7 @@
 
 - [Installation](https://github.com/michal-minarik/arse#installation)
 - [Getting Started](https://github.com/michal-minarik/arse#getting-started)
+- [Customize Localization](https://github.com/michal-minarik/arse#customize-localization)
 - [Advanced Parameters](https://github.com/michal-minarik/arse#advanced-parameters)
 
 # Installation
@@ -148,7 +149,7 @@ Download the arse.py script from this repository also download the sample_input.
 You are all set to run the script. Navigate to the directory where you saved the script and execute:
 
 ```bash
-python ./arse.py
+python arse.py
 ```
 
 The script will recap, what it will import into SFDC.
@@ -158,9 +159,9 @@ The script will recap, what it will import into SFDC.
 Tasks to be reported:
 
 ------------
-        date      type      subject  hours related_object        related_to     status
-0 2020-10-20  Workshop  Hello world      2        Account               ***  Completed
-1 2020-10-21  Workshop  Hello world      2    Opportunity               ***  Completed
+                 date          activity      type       subject  hours related_object        related_to     status
+0 2020-12-02 17:30:00  EMEA SE Activity  Workshop  TEST_ACCOUNT    0.5        Account                 *  Completed
+1 2020-12-02 18:30:00  EMEA SE Activity  Workshop    TEST_OPPTY    0.5    Opportunity                 *  Completed
 ------------
 ```
 
@@ -171,13 +172,7 @@ Your VMware username: ********
 Password: 
 ```
 
-Next step is to confirm you date/time format you SFDC is expecting. For example in my case, SFDC uses Czech date format 30.11.2020 so I am OK with the defaults and I can just hit enter. If you are using diffent format you will need to specify it.
-
-```bash
-Your SFDC date format (default: %d.%m.%Y):
-```
-
-That's it. Now the script will open a controlled Firefox browser and load all the tasks (as EMEA SE Activity taks). Once it's done you will see the message:
+That's it. Now the script will open a controlled Firefox browser and load all tasks. Once it's done you will see the message:
 
 ```bash
 Reporting done
@@ -278,6 +273,26 @@ Following fields are mandatory and must be filled:
 - Not Started
 - In Progress
 - Completed
+
+# Customize localization
+
+Because your SFDC might talk in different language you must set up your localization settings correctly in the config.json file. There are two main point where the automation typically fails.
+
+**Date format**
+
+When importing tasks you will see in the Firefox window error: Invalid Date.
+
+To fix this issue, open the config.json file and change this line to match your SFDC date format:
+
+```"date_format": "%d.%m.%Y",```
+
+**Decimal separator**
+
+When importing tasks you will see in the Firefox window error: Invalid Number.
+
+To fix this issue, open the config.json file and change this line to match your SFDC numbering format:
+
+```"decimal_separator": ","```
 
 # Advanced parameters
 

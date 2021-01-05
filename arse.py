@@ -15,7 +15,9 @@ import pandas as pd
 import getpass
 import argparse
 import re
+import json
 
+# Class for checking if SDFC was loaded (either Lighning or Classic)
 class sfdc_is_loaded_class(object):
 	def __call__(self, driver):
 		element = driver.find_element_by_xpath("/html/body")
@@ -37,6 +39,13 @@ parser.add_argument("--limit-end")
 parser.add_argument("--calendar-file")
 parser.add_argument("--prompt-username")
 args = parser.parse_args()
+
+# Read configuration JSON
+with open('config.json', 'r') as configFile:
+    data = configFile.read()
+
+# Parse JSON file
+configs = json.loads(data)
 
 #
 # Calendar load
@@ -115,9 +124,6 @@ input()
 # Import to SFDC
 #
 
-dateFormat = "%d.%m.%Y"
-decimalSeparator = ","
-
 df = pd.read_excel('input.xlsx')
 
 print('\nTasks to be reported:')
@@ -133,22 +139,6 @@ else:
 	username = getpass.getuser()
 	print('Your VMware username: ' + username)
 password = getpass.getpass()
-
-# Set the date format for SFDC
-print('\n')
-print('Your SFDC date format (default: ' + dateFormat +'):')
-newDateFormat = input()
-
-if newDateFormat != "":
-	dateFormat = newDateFormat
-
-# Set the decimal separator for SFDC
-print('\n')
-print('Your SFDC decimal separator . or , ? (default: ' + decimalSeparator +'):')
-newDecimalSeparator = input()
-
-if newDecimalSeparator != "":
-	decimalSeparator = newDecimalSeparator
 
 # Open Firefox and start login to SFDC
 browser = webdriver.Firefox()
@@ -221,7 +211,7 @@ for index, row in df.iterrows():
 		subjectField.send_keys(row.subject)
 
 		dateField = browser.find_element_by_id("tsk4")
-		dateField.send_keys(row.date.strftime("%d.%m.%Y"))
+		dateField.send_keys(row.date.strftime(str(configs['date_format'])))
 
 		relatedObjectSelect = Select(browser.find_element_by_id('tsk3_mlktp'))
 		relatedObjectSelect.select_by_visible_text(row.related_object)
@@ -236,7 +226,7 @@ for index, row in df.iterrows():
 		statusSelect.select_by_value(row.status)
 
 		workHoursField = browser.find_element_by_id("00N80000004k1Mo")
-		workHoursField.send_keys(str(row.hours).replace(".", decimalSeparator))
+		workHoursField.send_keys(str(row.hours).replace(".", str(configs['decimal_separator'])))
 
 		# Submit
 		submitButton = browser.find_element_by_xpath("/html/body/div[1]/div[3]/table/tbody/tr/td[2]/form/div/div[3]/table/tbody/tr/td[2]/input[1]")
@@ -270,13 +260,13 @@ for index, row in df.iterrows():
 		subjectField.send_keys(row.subject)
 
 		dateField = browser.find_element_by_id("tsk4")
-		dateField.send_keys(row.date.strftime("%d.%m.%Y"))
+		dateField.send_keys(row.date.strftime(str(configs['date_format'])))
 		
 		activityTypeSelect = Select(browser.find_element_by_id('00N80000004k1L2'))
 		activityTypeSelect.select_by_value(row.type)
 
 		workHoursField = browser.find_element_by_id("00N80000004k1Mo")
-		workHoursField.send_keys(str(row.hours).replace(".", decimalSeparator))
+		workHoursField.send_keys(str(row.hours).replace(".", str(configs['decimal_separator'])))
 
 		statusSelect = Select(browser.find_element_by_id('tsk12'))
 		statusSelect.select_by_value(row.status)
