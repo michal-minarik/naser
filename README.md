@@ -3,6 +3,7 @@
 - [Installation](https://github.com/michal-minarik/arse#installation)
 - [Getting Started](https://github.com/michal-minarik/arse#getting-started)
 - [Customize Localization](https://github.com/michal-minarik/arse#customize-localization)
+- [Input File Structure](https://github.com/michal-minarik/arse#input-file-structure)
 - [Advanced Parameters](https://github.com/michal-minarik/arse#advanced-parameters)
 
 # Installation
@@ -138,15 +139,27 @@ This program is subject to the terms of the Mozilla Public License 2.0.
 You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 ```
 
-## Download the script
+## Clone this repository
 
-Download the arse.py script from this repository also download the sample_input.xlsx file and save as input.xlsx in the same directory where you have the script.
+You will need multiple files in a single directory. The easiest way how to get this done is to clone this git repository. To do so run this command:
+
+```git clone https://github.com/michal-minarik/arse.git```
+
+If you don't have git installed on your machine follow the official docs to get it.
 
 # Getting started
 
+## Prepare input file
+
+When you cloned the repository a sample file sample_input.xlsx was created for you. Rename/duplicate this file and name it input.xlsx, keep it in the same directory. Now you can input your activities into this file.
+
+Follow the structure from the sample file and [the input file structure](https://github.com/michal-minarik/arse#input-file-structure)
+
+NOTE: Pre-populating this file with data from your calendar is not fully implemented. It's a roadmap item. :-)
+
 ## Basic usage
 
-You are all set to run the script. Navigate to the directory where you saved the script and execute:
+You are all set to run the script. Navigate to the directory where you cloned the repository and execute:
 
 ```bash
 python arse.py
@@ -178,7 +191,28 @@ That's it. Now the script will open a controlled Firefox browser and load all ta
 Reporting done
 ```
 
-## Input file structure
+
+# Customize localization
+
+Because your SFDC might talk in different language you must set up your localization settings correctly in the config.json file. There are two main points where the automation typically fails.
+
+**Date format**
+
+When importing tasks you will see in the Firefox window error: Invalid Date.
+
+To fix this issue, open the config.json file and change this line to match your SFDC date format:
+
+```"date_format": "%d.%m.%Y",```
+
+**Decimal separator**
+
+When importing tasks you will see in the Firefox window error: Invalid Number.
+
+To fix this issue, open the config.json file and change this line to match your SFDC numbering format:
+
+```"decimal_separator": ","```
+
+# Input file structure
 
 ### Fields for EMEA SE Activity
 
@@ -274,25 +308,6 @@ Following fields are mandatory and must be filled:
 - In Progress
 - Completed
 
-# Customize localization
-
-Because your SFDC might talk in different language you must set up your localization settings correctly in the config.json file. There are two main points where the automation typically fails.
-
-**Date format**
-
-When importing tasks you will see in the Firefox window error: Invalid Date.
-
-To fix this issue, open the config.json file and change this line to match your SFDC date format:
-
-```"date_format": "%d.%m.%Y",```
-
-**Decimal separator**
-
-When importing tasks you will see in the Firefox window error: Invalid Number.
-
-To fix this issue, open the config.json file and change this line to match your SFDC numbering format:
-
-```"decimal_separator": ","```
 
 # Advanced parameters
 
