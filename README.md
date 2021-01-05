@@ -18,7 +18,17 @@ Python 3.8.5
 
 If you don't have Python on your machine install it by following the official documentation: https://www.python.org/downloads/
 
-If you are running 2.X version of Python upgrade it.
+If you are running 2.X version of Python upgrade it. 
+
+NOTE: It might be, that you have python 3.X on your machine already installed, but it might be behind the python3 command. Try: 
+
+```bash
+python3 -V
+
+Python 3.8.5
+```
+
+If it works for you just use command python3 instead of python and continue with the setup.
 
 ## Install pip
 
@@ -66,6 +76,20 @@ If not run this command:
 
 ```bash 
 pip install selenium
+``` 
+
+Check if you have pandas module installed:
+
+```bash
+pip list | grep xlrd
+
+xlrd              1.2.0
+```
+
+If not run this command:
+
+```bash 
+pip install xlrd
 ``` 
 
 ## Install Firefox driver for selenium
