@@ -10,19 +10,113 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+import xml.etree.ElementTree as et 
 import pandas as pd
 import getpass
+import argparse
+import re
+
+class sfdc_is_loaded_class(object):
+	def __call__(self, driver):
+		element = driver.find_element_by_xpath("/html/body")
+		if "desktop" in element.get_attribute("class"):
+			return element
+		elif "sfdcBody" in element.get_attribute("class"):
+			return element
+		else:
+			return False
+
 
 print('\n*******************************************************************')
 print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.0')
 print('*******************************************************************')
 
-dateFormat = "%d.%m.%Y"
-promptUsername = False
+parser = argparse.ArgumentParser()
+parser.add_argument("--limit-start")
+parser.add_argument("--limit-end")
+parser.add_argument("--calendar-file")
+parser.add_argument("--prompt-username")
+args = parser.parse_args()
 
-for arg in sys.argv:
-	if str(arg) == "--prompt-username":
-		promptUsername = True
+#
+# Calendar load
+#
+
+if args.calendar_file != None:
+
+	xtree = et.parse(args.calendar_file)
+	xroot = xtree.getroot()
+
+	data = []
+
+	for node in xroot.iter('appointment'):
+
+		activity = ''
+		activityType = ''
+		related_object = ''
+		related_to = ''
+
+		try:
+			summary = node.find('OPFCalendarEventCopySummary').text.strip()
+		except AttributeError:
+			summary = ''
+
+		start = pd.to_datetime(node.find('OPFCalendarEventCopyStartTime').text)
+		end = pd.to_datetime(node.find('OPFCalendarEventCopyEndTime').text)
+
+		try:
+			description = node.find('OPFCalendarEventCopyDescriptionPlain').text
+		except AttributeError:
+			description = ''
+
+		# Calculate the duration and round to half hours
+		duration = round(((end - start).total_seconds() / 3600) * 2) / 2
+		
+		if description:
+			# Sanitize input for RegEx
+			description = description.replace("\u2028", "")
+
+			matches = re.match(r"^#(e|i):(\w+):(Account|Opportunity):(.+)#$", description, re.MULTILINE)
+			if matches:
+				if matches.groups()[0] == "e":
+					activity = "EMEA SE Activity"
+				elif matches.groups()[0] == "i":
+					activity = "SE Internal Activity"
+				activityType = matches.groups()[1]
+				related_object = matches.groups()[2]
+				related_to = matches.groups()[3]
+
+		# Skip items before selected date
+		if args.limit_start:
+			limitStart = pd.to_datetime(args.limit_start)
+			if (start <= limitStart):
+				continue
+
+		# Skip items after selected date
+		if args.limit_end:
+			limitEnd = pd.to_datetime(args.limit_end)
+			if (start >= limitEnd):
+				continue
+
+		data.append([start, activity, activityType, summary, duration, related_object, related_to, 'Completed'])
+
+	df = pd.DataFrame(data, columns = ['date', 'activity', 'type', 'subject', 'hours', 'related_object', 'related_to', 'status']) 
+
+	df.to_excel('input.xlsx', index=False)
+
+#
+# Wait for confimation
+#
+
+print("Is your Excel ready to be imported?")
+input()
+
+#
+# Import to SFDC
+#
+
+dateFormat = "%d.%m.%Y"
+decimalSeparator = ","
 
 df = pd.read_excel('input.xlsx')
 
@@ -32,7 +126,7 @@ print(df)
 print('------------\n')
 
 # Get the username and password
-if promptUsername is True:
+if args.prompt_username:
 	print('Your VMware username:')
 	username = input()
 else:
@@ -47,6 +141,14 @@ newDateFormat = input()
 
 if newDateFormat != "":
 	dateFormat = newDateFormat
+
+# Set the decimal separator for SFDC
+print('\n')
+print('Your SFDC decimal separator . or , ? (default: ' + decimalSeparator +'):')
+newDecimalSeparator = input()
+
+if newDecimalSeparator != "":
+	decimalSeparator = newDecimalSeparator
 
 # Open Firefox and start login to SFDC
 browser = webdriver.Firefox()
@@ -67,10 +169,28 @@ passwordField.send_keys(password)
 signInButton = browser.find_element_by_id("signIn")
 signInButton.click()
 
-# Wait for complete SSO login to SFDC
-wait.until(EC.title_is("Salesforce - Unlimited Edition"))
-
 lightningNotificationDismissed = False
+
+# Wait for SFDC to load
+wait.until(sfdc_is_loaded_class())
+
+# Check for SFDC Lightning
+matches = re.match(r".*lightning.*", browser.current_url)
+if matches:
+	print("Lightning detected - Switching to SFDC Classic")
+
+	browser.implicitly_wait(5)
+
+	profileIcon = browser.find_element_by_xpath("/html/body/div[4]/div[1]/section/header/div[2]/span/div[2]/ul/li[8]/span/button/div/span[1]/div")
+	profileIcon.click()
+
+	switchToClassicLink = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div[2]/div[1]/div[1]/div/div[5]/a")
+	switchToClassicLink.click()
+
+	lightningNotificationDismissed = True
+
+# Wait classic SFDC to load
+wait.until(EC.title_is("Salesforce - Unlimited Edition"))
 
 for index, row in df.iterrows():
 
@@ -116,7 +236,7 @@ for index, row in df.iterrows():
 		statusSelect.select_by_value(row.status)
 
 		workHoursField = browser.find_element_by_id("00N80000004k1Mo")
-		workHoursField.send_keys(row.hours)
+		workHoursField.send_keys(str(row.hours).replace(".", decimalSeparator))
 
 		# Submit
 		submitButton = browser.find_element_by_xpath("/html/body/div[1]/div[3]/table/tbody/tr/td[2]/form/div/div[3]/table/tbody/tr/td[2]/input[1]")
@@ -156,7 +276,7 @@ for index, row in df.iterrows():
 		activityTypeSelect.select_by_value(row.type)
 
 		workHoursField = browser.find_element_by_id("00N80000004k1Mo")
-		workHoursField.send_keys(row.hours)
+		workHoursField.send_keys(str(row.hours).replace(".", decimalSeparator))
 
 		statusSelect = Select(browser.find_element_by_id('tsk12'))
 		statusSelect.select_by_value(row.status)
