@@ -276,7 +276,7 @@ Following fields are mandatory and must be filled:
 
 # Customize localization
 
-Because your SFDC might talk in different language you must set up your localization settings correctly in the config.json file. There are two main point where the automation typically fails.
+Because your SFDC might talk in different language you must set up your localization settings correctly in the config.json file. There are two main points where the automation typically fails.
 
 **Date format**
 
