@@ -80,7 +80,7 @@ If not run this command:
 pip install selenium
 ``` 
 
-Check if you have pandas module installed:
+Check if you have xlrd module installed:
 
 ```bash
 pip list | grep xlrd
