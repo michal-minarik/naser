@@ -21,12 +21,14 @@ import json
 class sfdc_is_loaded_class(object):
 	def __call__(self, driver):
 		element = driver.find_element_by_xpath("/html/body")
-		if "desktop" in element.get_attribute("class"):
-			return element
-		elif "sfdcBody" in element.get_attribute("class"):
-			return element
-		else:
-			return False
+		classes = element.get_attribute("class")
+		if classes != '':
+			if "desktop" in classes:
+				return element
+			elif "sfdcBody" in classes:
+				return element
+			else:
+				return False
 
 
 print('\n*******************************************************************')
@@ -169,13 +171,15 @@ matches = re.match(r".*lightning.*", browser.current_url)
 if matches:
 	print("Lightning detected - Switching to SFDC Classic")
 
-	browser.implicitly_wait(5)
+	browser.implicitly_wait(10)
 
 	profileIcon = browser.find_element_by_xpath("/html/body/div[4]/div[1]/section/header/div[2]/span/div[2]/ul/li[8]/span/button/div/span[1]/div")
 	profileIcon.click()
 
 	switchToClassicLink = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div[2]/div[1]/div[1]/div/div[5]/a")
 	switchToClassicLink.click()
+
+	# wait.until(EC.presence_of_element_located((By.ID, "lightningFeedbackPage:feedbackForm")))
 
 	lightningNotificationDismissed = True
 

@@ -83,15 +83,15 @@ pip install selenium
 Check if you have xlrd module installed:
 
 ```bash
-pip list | grep xlrd
+pip list | grep openpyxl
 
-xlrd              1.2.0
+openpyxl          3.0.6
 ```
 
 If not run this command:
 
 ```bash 
-pip install xlrd
+pip install openpyxl
 ``` 
 
 ## Install Firefox driver for selenium
