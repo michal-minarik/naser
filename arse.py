@@ -16,6 +16,7 @@ import getpass
 import argparse
 import re
 import json
+import time
 
 # Class for checking if SDFC was loaded (either Lighning or Classic)
 class sfdc_is_loaded_class(object):
@@ -214,6 +215,14 @@ for index, row in df.iterrows():
 		subjectField = browser.find_element_by_id("tsk5")
 		subjectField.send_keys(row.subject)
 
+		if not pd.isna(row.notes):
+			notesField = browser.find_element_by_id("tsk6")
+			notesField.send_keys(row.notes)
+
+		if not pd.isna(row.next_step):
+			nextStepField = browser.find_element_by_id("00N80000004k1LI")
+			nextStepField.send_keys(row.next_step)
+
 		dateField = browser.find_element_by_id("tsk4")
 		dateField.send_keys(row.date.strftime(str(configs['date_format'])))
 
@@ -223,11 +232,23 @@ for index, row in df.iterrows():
 		relatedToField = browser.find_element_by_id("tsk3")
 		relatedToField.send_keys(row.related_to)
 
+		if not pd.isna(row.activity_category):
+			activityCategorySelect = Select(browser.find_element_by_id('00N80000004oGaG'))
+			activityCategorySelect.select_by_visible_text(row.activity_category)
+
 		activityTypeSelect = Select(browser.find_element_by_id('00N80000004k1L2'))
 		activityTypeSelect.select_by_value(row.type)
 
 		statusSelect = Select(browser.find_element_by_id('tsk12'))
 		statusSelect.select_by_value(row.status)
+
+		if not pd.isna(row.solution):
+			solutionSelect = Select(browser.find_element_by_id('00N80000004oGaR'))
+			solutionSelect.select_by_visible_text(row.solution)
+
+		if not pd.isna(row.solution_product):
+			productSelect = Select(browser.find_element_by_id('00N80000004oGaL'))
+			productSelect.select_by_visible_text(row.solution_product)
 
 		workHoursField = browser.find_element_by_id("00N80000004k1Mo")
 		workHoursField.send_keys(str(row.hours).replace(".", str(configs['decimal_separator'])))
@@ -262,6 +283,10 @@ for index, row in df.iterrows():
 		# Fill the form
 		subjectField = browser.find_element_by_id("tsk5")
 		subjectField.send_keys(row.subject)
+
+		if not pd.isna(row.notes):
+			notesField = browser.find_element_by_id("tsk6")
+			notesField.send_keys(row.notes)
 
 		dateField = browser.find_element_by_id("tsk4")
 		dateField.send_keys(row.date.strftime(str(configs['date_format'])))
