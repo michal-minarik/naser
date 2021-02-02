@@ -224,9 +224,14 @@ Following fields are mandatory and must be filled:
 | activity  | Internal or normal activity definition  | EMEA SE Activity |
 | type  | Activity type  | [EMEA SE Activity - type values](https://github.com/michal-minarik/arse#emea-se-activity---type-values) |
 | subject  | Activity subject  | Text |
-| hours  | Worked hours  | Integer |
+| notes  | Notes / Comments  | Text (Optional) |
+| next_step  | Next step  | Text (Optional) |
 | related_object  | Related to SFDC type  | [EMEA SE Activity - related_object values](https://github.com/michal-minarik/arse#emea-se-activity---related_object-values) |
 | related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) |
+| activity_category  | Activity Category  | Values in SFDC (Optional) |
+| solution  | Solution  | Values in SFDC (Optional) |
+| solution_product  | Product  | Values in SFDC (Optional) |
+| hours  | Worked hours  | Integer |
 | status  | Task status  | [EMEA SE Activity - status values](https://github.com/michal-minarik/arse#emea-se-activity---status-values)  |
 
 #### EMEA SE Activity - type values
@@ -282,6 +287,7 @@ Following fields are mandatory and must be filled:
 | activity  | Internal or normal activity definition  | SE Internal Activity |
 | type  | Activity type  | [SE Internal Activity - type values](https://github.com/michal-minarik/arse#se-internal-activity---type-values) |
 | subject  | Activity subject  | Text |
+| notes  | Notes / Comments  | Text (Optional) |
 | hours  | Worked hours  | Integer |
 | status  | Task status  | [SE Internal Activity - status values](https://github.com/michal-minarik/arse#se-internal-activity---status-values)  |
 
