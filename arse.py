@@ -177,7 +177,7 @@ matches = re.match(r".*lightning.*", browser.current_url)
 if matches:
 	print("Lightning detected - Switching to SFDC Classic")
 
-	browser.implicitly_wait(10)
+	browser.implicitly_wait(20)
 
 	profileIcon = browser.find_element_by_xpath("/html/body/div[4]/div[1]/section/header/div[2]/span/div[2]/ul/li[8]/span/button/div/span[1]/div")
 	profileIcon.click()
