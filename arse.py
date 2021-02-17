@@ -30,9 +30,15 @@ class sfdc_is_loaded_class(object):
 			else:
 				return False
 
+# Read configuration JSON
+with open('config.json', 'r') as configFile:
+    data = configFile.read()
+
+# Parse JSON file
+configs = json.loads(data)
 
 print('\n*******************************************************************')
-print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.1')
+print('  Automated Reporting for System Engineers (A.R.S.E.) version ' + str(configs['version']))
 print('*******************************************************************')
 
 parser = argparse.ArgumentParser()
@@ -41,13 +47,6 @@ parser.add_argument("--limit-end")
 parser.add_argument("--calendar-file")
 parser.add_argument("--prompt-username")
 args = parser.parse_args()
-
-# Read configuration JSON
-with open('config.json', 'r') as configFile:
-    data = configFile.read()
-
-# Parse JSON file
-configs = json.loads(data)
 
 #
 # Calendar load
