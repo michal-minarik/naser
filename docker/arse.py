@@ -1,7 +1,7 @@
 #
 # Automated Reporting for System Engineers (A.R.S.E)
 # by Michal Minarik (mminarik@vmware.com)
-# version 1.0
+# version 1.1
 #
 
 import sys
@@ -147,7 +147,7 @@ password = getpass.getpass()
 
 # Use Selenuim container
 browser = webdriver.Remote(
-   command_executor='http://worker:4444/wd/hub',
+   command_executor=str(configs['worker'])),
    desired_capabilities={'browserName': 'firefox'})
 
 wait = WebDriverWait(browser, 30)
