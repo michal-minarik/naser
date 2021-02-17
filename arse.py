@@ -32,7 +32,7 @@ class sfdc_is_loaded_class(object):
 
 
 print('\n*******************************************************************')
-print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.0')
+print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.1')
 print('*******************************************************************')
 
 parser = argparse.ArgumentParser()
