@@ -13,5 +13,5 @@ docker run -d --link selenium-hub:hub --shm-size 2g --name firefox selenium/node
 
 Start single node Selenuim
 ```
-docker run -d -p 4444:4444 --shm-size 2g selenium/standalone-firefox:4.0.0-beta-1-prerelease-20210128
+docker run -d -p 5901:5901-p 4444:4444 --shm-size 2g selenium/standalone-firefox:4.0.0-beta-1-prerelease-20210128
 ```

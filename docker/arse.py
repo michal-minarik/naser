@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
-import xml.etree.ElementTree as et 
+import xml.etree.ElementTree as et
 import pandas as pd
 import getpass
 import argparse
@@ -82,7 +82,7 @@ if args.calendar_file != None:
 
 		# Calculate the duration and round to half hours
 		duration = round(((end - start).total_seconds() / 3600) * 2) / 2
-		
+
 		if description:
 			# Sanitize input for RegEx
 			description = description.replace("\u2028", "")
@@ -111,7 +111,7 @@ if args.calendar_file != None:
 
 		data.append([start, activity, activityType, summary, duration, related_object, related_to, 'Completed'])
 
-	df = pd.DataFrame(data, columns = ['date', 'activity', 'type', 'subject', 'hours', 'related_object', 'related_to', 'status']) 
+	df = pd.DataFrame(data, columns = ['date', 'activity', 'type', 'subject', 'hours', 'related_object', 'related_to', 'status'])
 
 	df.to_excel('input.xlsx', index=False)
 
@@ -143,7 +143,13 @@ else:
 password = getpass.getpass()
 
 # Open Firefox and start login to SFDC
-browser = webdriver.Firefox()
+#browser = webdriver.Firefox()
+
+# Use Selenuim container
+browser = webdriver.Remote(
+   command_executor='http://worker:4444/wd/hub',
+   desired_capabilities={'browserName': 'firefox'})
+
 wait = WebDriverWait(browser, 30)
 browser.get('https://vmware.my.salesforce.com')
 
@@ -199,12 +205,12 @@ for index, row in df.iterrows():
 		if lightningNotificationDismissed is False:
 
 			wait.until(EC.presence_of_element_located((By.ID, "lexNoThanks")))
-			
+
 			lightningNotificationQuestionButton = browser.find_element_by_id("lexNoThanks")
 			lightningNotificationQuestionButton.click()
 
 			wait.until(EC.presence_of_element_located((By.ID, "lexSubmit")))
-			
+
 			lightningNotificationCloseButton = browser.find_element_by_id("lexSubmit")
 			lightningNotificationCloseButton.click()
 
@@ -248,24 +254,24 @@ for index, row in df.iterrows():
 		if lightningNotificationDismissed is False:
 
 			wait.until(EC.presence_of_element_located((By.ID, "lexNoThanks")))
-			
+
 			lightningNotificationQuestionButton = browser.find_element_by_id("lexNoThanks")
 			lightningNotificationQuestionButton.click()
 
 			wait.until(EC.presence_of_element_located((By.ID, "lexSubmit")))
-			
+
 			lightningNotificationCloseButton = browser.find_element_by_id("lexSubmit")
 			lightningNotificationCloseButton.click()
 
 			lightningNotificationDismissed = True
-		
+
 		# Fill the form
 		subjectField = browser.find_element_by_id("tsk5")
 		subjectField.send_keys(row.subject)
 
 		dateField = browser.find_element_by_id("tsk4")
 		dateField.send_keys(row.date.strftime(str(configs['date_format'])))
-		
+
 		activityTypeSelect = Select(browser.find_element_by_id('00N80000004k1L2'))
 		activityTypeSelect.select_by_value(row.type)
 
@@ -281,9 +287,8 @@ for index, row in df.iterrows():
 
 		# Wait for the form to be fully submited (TODO: Create some condition and remove the explicit wait)
 		browser.implicitly_wait(10) # seconds
-	
+
 	else:
 		print("Item cannot be logged due to invalid value of field 'activity'")
 
 print("\nReporting in done!")
-
