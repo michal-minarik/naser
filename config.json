@@ -1,4 +1,5 @@
 {
     "date_format": "%d.%m.%Y",
-    "decimal_separator": ","
+    "decimal_separator": ",",
+    "worker": "htpp://10.0.0.95:4444/wd/hub"    
 }

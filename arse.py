@@ -1,7 +1,7 @@
 #
 # Automated Reporting for System Engineers (A.R.S.E)
 # by Michal Minarik (mminarik@vmware.com)
-# version 1.0
+# version 1.1
 #
 
 import sys
@@ -145,9 +145,9 @@ password = getpass.getpass()
 # Open Firefox and start login to SFDC
 #browser = webdriver.Firefox()
 
-# Use Selenuim container
+# Use Selenuim container from defined host
 browser = webdriver.Remote(
-   command_executor='http://worker:4444/wd/hub',
+   command_executor=str(configs['worker'])),
    desired_capabilities={'browserName': 'firefox'})
 
 wait = WebDriverWait(browser, 30)
