@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 #
 # Automated Reporting for System Engineers (A.R.S.E)
 # by Michal Minarik (mminarik@vmware.com)
@@ -177,7 +176,7 @@ matches = re.match(r".*lightning.*", browser.current_url)
 if matches:
 	print("Lightning detected - Switching to SFDC Classic")
 
-	browser.implicitly_wait(20)
+	browser.implicitly_wait(10)
 
 	profileIcon = browser.find_element_by_xpath("/html/body/div[4]/div[1]/section/header/div[2]/span/div[2]/ul/li[8]/span/button/div/span[1]/div")
 	profileIcon.click()
