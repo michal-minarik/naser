@@ -147,7 +147,7 @@ password = getpass.getpass()
 
 # Use Selenuim container from defined host
 browser = webdriver.Remote(
-   command_executor=str(configs['worker'])),
+   command_executor=str(configs['worker']) ,
    desired_capabilities={'browserName': 'firefox'})
 
 wait = WebDriverWait(browser, 30)
