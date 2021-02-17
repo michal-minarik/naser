@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#build container
 
 cp ../arse.py .
 cp ../config.json .
