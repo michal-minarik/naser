@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #
 # Automated Reporting for System Engineers (A.R.S.E)
 # by Michal Minarik (mminarik@vmware.com)
