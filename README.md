@@ -167,14 +167,6 @@ This program is subject to the terms of the Mozilla Public License 2.0.
 You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 ```
 
-## Publish your O365 calendar
-
-If you want to use the functionality to export the calendar and prepopulate the import file, you must share/publish your calendar. Login to you web Outlook - https://outlook.office.com. Go to Setting and "View all Outlook settings" section.
-
-In this section navigate to Calendar > Shared Calendars. Here in the section "Publish a calendar" select your work calendar and publish it with the permission to "Can view all details". Click publish. Copy the ICS link that has been generated for you.
-
-Paste this link to the config.json file as a ics_url parameter.
-
 ## Clone this repository
 
 You will need multiple files in a single directory. The easiest way how to get this done is to clone this git repository. To do so run this command:
@@ -182,6 +174,18 @@ You will need multiple files in a single directory. The easiest way how to get t
 ```git clone https://github.com/michal-minarik/arse.git```
 
 If you don't have git installed on your machine follow the official docs to get it.
+
+## Prepare the config.json
+
+Make a copy of config_sample.json and save it as config.json.
+
+## Publish your O365 calendar
+
+If you want to use the functionality to export the calendar and prepopulate the import file, you must share/publish your calendar. Login to you web Outlook - https://outlook.office.com. Go to Settings and "View all Outlook settings" section.
+
+In this section navigate to Calendar > Shared Calendars. Here in the section "Publish a calendar" select your work calendar and publish it with the permission "Can view all details". Click publish. Copy the ICS link that has been generated for you.
+
+Paste this link to the config.json file as a ics_url parameter.
 
 # Getting started
 
