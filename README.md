@@ -261,6 +261,23 @@ To fix this issue, open the config.json file and change this line to match your 
 
 ```"decimal_separator": ","```
 
+# Taging your events in calendar
+
+When using the calendar export feature you can add a special tag to the body of your event which will then be recognized, parsed and exported automatically to the input.xlsx file.
+
+Here are the options for internal activity:
+
+#i:<HERE WILL BE YOUR ACTIVITY TYPE>:n/a:n/a# so for example: #i:Meetings:n/a:n/a#
+
+Here are the options for EMEA SE activity:
+
+#e:<HERE WILL BE YOUR ACTIVITY TYPE>:Account:<ACCOUNT NAME FROM SFDC># so for example: #e:Workshop:Account:Dell Computers Czech Republic#
+
+or you can link to opportunity:
+
+#e:<HERE WILL BE YOUR ACTIVITY TYPE>:Opportunity:<OPPORTUNITY NAME FROM SFDC># so for example: #e:Demo:Opportunity:CZ/RS/.../MDM#
+
+
 # Input file structure
 
 ### Fields for EMEA SE Activity

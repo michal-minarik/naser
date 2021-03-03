@@ -89,7 +89,7 @@ if args.read_calendar != None:
 			if description:
 				description = description.replace("\u2028", "")
 
-				matches = re.match(r"^#(e|i):(\w+):(Account|Opportunity):(.+)#$", description, re.MULTILINE)
+				matches = re.match(r"^#(e|i):(\w+):(Account|Opportunity|n/a):(.+)#$", description, re.MULTILINE)
 				if matches:
 					if matches.groups()[0] == "e":
 						activity = "EMEA SE Activity"
