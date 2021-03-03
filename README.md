@@ -267,15 +267,15 @@ When using the calendar export feature you can add a special tag to the body of 
 
 Here are the options for internal activity:
 
-```#i:<HERE WILL BE YOUR ACTIVITY TYPE>:n/a:n/a# so for example: #i:Meetings:n/a:n/a#```
+```#i:<HERE WILL BE YOUR ACTIVITY TYPE>:n/a:n/a#``` so for example: ```#i:Meetings:n/a:n/a#```
 
 Here are the options for EMEA SE activity:
 
-```#e:<HERE WILL BE YOUR ACTIVITY TYPE>:Account:<ACCOUNT NAME FROM SFDC># so for example: #e:Workshop:Account:Dell Computers Czech Republic#```
+```#e:<HERE WILL BE YOUR ACTIVITY TYPE>:Account:<ACCOUNT NAME FROM SFDC>#``` so for example: ```#e:Workshop:Account:Dell Computers Czech Republic#```
 
 or you can link to opportunity:
 
-#```e:<HERE WILL BE YOUR ACTIVITY TYPE>:Opportunity:<OPPORTUNITY NAME FROM SFDC># so for example: #e:Demo:Opportunity:CZ/RS/.../MDM#```
+```#e:<HERE WILL BE YOUR ACTIVITY TYPE>:Opportunity:<OPPORTUNITY NAME FROM SFDC>#``` so for example: ```#e:Demo:Opportunity:CZ/RS/.../MDM#```
 
 
 # Input file structure
