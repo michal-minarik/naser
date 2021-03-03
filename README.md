@@ -80,7 +80,7 @@ If not run this command:
 pip install selenium
 ``` 
 
-Check if you have xlrd module installed:
+Check if you have openpyxl module installed:
 
 ```bash
 pip list | grep openpyxl
@@ -92,6 +92,34 @@ If not run this command:
 
 ```bash 
 pip install openpyxl
+``` 
+
+Check if you have requests module installed:
+
+```bash
+pip list | grep requests
+
+requests          2.25.1
+```
+
+If not run this command:
+
+```bash 
+pip install requests
+``` 
+
+Check if you have icalendar module installed:
+
+```bash
+pip list | grep icalendar
+
+icalendar          4.0.7
+```
+
+If not run this command:
+
+```bash 
+pip install icalendar
 ``` 
 
 ## Install Firefox driver for selenium
@@ -139,6 +167,14 @@ This program is subject to the terms of the Mozilla Public License 2.0.
 You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 ```
 
+## Publish your O365 calendar
+
+If you want to use the functionality to export the calendar and prepopulate the import file, you must share/publish your calendar. Login to you web Outlook - https://outlook.office.com. Go to Setting and "View all Outlook settings" section.
+
+In this section navigate to Calendar > Shared Calendars. Here in the section "Publish a calendar" select your work calendar and publish it with the permission to "Can view all details". Click publish. Copy the ICS link that has been generated for you.
+
+Paste this link to the config.json file as a ics_url parameter.
+
 ## Clone this repository
 
 You will need multiple files in a single directory. The easiest way how to get this done is to clone this git repository. To do so run this command:
@@ -154,8 +190,6 @@ If you don't have git installed on your machine follow the official docs to get 
 When you cloned the repository a sample file sample_input.xlsx was created for you. Rename/duplicate this file and name it input.xlsx, keep it in the same directory. Now you can input your activities into this file.
 
 Follow the structure from the sample file and [the input file structure](https://github.com/michal-minarik/arse#input-file-structure)
-
-NOTE: Pre-populating this file with data from your calendar is not fully implemented. It's a roadmap item. :-)
 
 ## Basic usage
 
@@ -191,6 +225,17 @@ That's it. Now the script will open a controlled Firefox browser and load all ta
 Reporting done
 ```
 
+## Calendar export
+
+If you want to export your O365 calendar you need to run the script with additional arguments.
+
+```bash
+python arse.py --read-calendar true --start-date 2021-02-01 --end-date 2021-03-01
+```
+
+This will export your calendar (see section Publish your O365 calendar) for necesary configuration.
+
+The start and end date parameters are always in the YYYY-MM-DD format.
 
 # Customize localization
 
