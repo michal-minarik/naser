@@ -1,7 +1,7 @@
 #
 # Automated Reporting for System Engineers (A.R.S.E)
 # by Michal Minarik (mminarik@vmware.com)
-# version 1.0
+# version 1.3
 #
 
 import sys
@@ -17,6 +17,8 @@ import argparse
 import re
 import json
 import time
+import icalendar
+import requests
 
 # Class for checking if SDFC was loaded (either Lighning or Classic)
 class sfdc_is_loaded_class(object):
@@ -33,13 +35,13 @@ class sfdc_is_loaded_class(object):
 
 
 print('\n*******************************************************************')
-print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.0')
+print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.3')
 print('*******************************************************************')
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--limit-start")
-parser.add_argument("--limit-end")
-parser.add_argument("--calendar-file")
+parser.add_argument("--start-date")
+parser.add_argument("--end-date")
+parser.add_argument("--read-calendar")
 parser.add_argument("--prompt-username")
 args = parser.parse_args()
 
@@ -54,68 +56,66 @@ configs = json.loads(data)
 # Calendar load
 #
 
-if args.calendar_file != None:
+if args.read_calendar != None:
 
-	xtree = et.parse(args.calendar_file)
-	xroot = xtree.getroot()
+	print(" + Downloading your calendar file from O365")
+
+	# Get the calendar from subscribed url
+	icsFile = requests.get(configs['ics_url']).text
+
+	print(" + Processing the calendar file")
+
+	gcal = icalendar.Calendar.from_ical(icsFile)
 
 	data = []
 
-	for node in xroot.iter('appointment'):
+	for component in gcal.walk():
+		if component.name == "VEVENT":
 
-		activity = ''
-		activityType = ''
-		related_object = ''
-		related_to = ''
+			activity = ''
+			activityType = ''
+			related_object = ''
+			related_to = ''
 
-		try:
-			summary = node.find('OPFCalendarEventCopySummary').text.strip()
-		except AttributeError:
-			summary = ''
+			summary = component.get('summary').strip()
 
-		start = pd.to_datetime(node.find('OPFCalendarEventCopyStartTime').text)
-		end = pd.to_datetime(node.find('OPFCalendarEventCopyEndTime').text)
+			start = component.get('dtstart').dt
+			end = component.get('dtend').dt
+			duration = round(((end - start).total_seconds() / 3600) * 2) / 2
 
-		try:
-			description = node.find('OPFCalendarEventCopyDescriptionPlain').text
-		except AttributeError:
-			description = ''
+			description = component.get('description')
 
-		# Calculate the duration and round to half hours
-		duration = round(((end - start).total_seconds() / 3600) * 2) / 2
-		
-		if description:
-			# Sanitize input for RegEx
-			description = description.replace("\u2028", "")
+			# Process the description
+			if description:
+				description = description.replace("\u2028", "")
 
-			matches = re.match(r"^#(e|i):(\w+):(Account|Opportunity):(.+)#$", description, re.MULTILINE)
-			if matches:
-				if matches.groups()[0] == "e":
-					activity = "EMEA SE Activity"
-				elif matches.groups()[0] == "i":
-					activity = "SE Internal Activity"
-				activityType = matches.groups()[1]
-				related_object = matches.groups()[2]
-				related_to = matches.groups()[3]
+				matches = re.match(r"^#(e|i):(\w+):(Account|Opportunity):(.+)#$", description, re.MULTILINE)
+				if matches:
+					if matches.groups()[0] == "e":
+						activity = "EMEA SE Activity"
+					elif matches.groups()[0] == "i":
+						activity = "SE Internal Activity"
+					activityType = matches.groups()[1]
+					related_object = matches.groups()[2]
+					related_to = matches.groups()[3]
 
-		# Skip items before selected date
-		if args.limit_start:
-			limitStart = pd.to_datetime(args.limit_start)
-			if (start <= limitStart):
-				continue
-
-		# Skip items after selected date
-		if args.limit_end:
-			limitEnd = pd.to_datetime(args.limit_end)
-			if (start >= limitEnd):
-				continue
-
-		data.append([start, activity, activityType, summary, duration, related_object, related_to, 'Completed'])
+			data.append([start, activity, activityType, summary, duration, related_object, related_to, 'Completed'])
 
 	df = pd.DataFrame(data, columns = ['date', 'activity', 'type', 'subject', 'hours', 'related_object', 'related_to', 'status']) 
 
-	df.to_excel('input.xlsx', index=False)
+	df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', utc=True) 
 
+	# Filter results based on dates
+	if args.start_date and args.end_date:
+		filtered_df = df.loc[(df['date'] >= args.start_date) & (df['date'] < args.end_date)] 
+	else:
+		filtered_df = df
+
+	filtered_df['date'] = filtered_df['date'].dt.tz_localize(None)
+
+	print(" + Exporting data to input.xlsx file")
+
+	filtered_df.to_excel('input.xlsx', index=False)
 #
 # Wait for confimation
 #
