@@ -3,6 +3,7 @@
 - [Installation](https://github.com/michal-minarik/arse#installation)
 - [Getting Started](https://github.com/michal-minarik/arse#getting-started)
 - [Customize Localization](https://github.com/michal-minarik/arse#customize-localization)
+- [Tag events in your calendar](https://github.com/michal-minarik/arse#tag-events-in-your-calendar)
 - [Input File Structure](https://github.com/michal-minarik/arse#input-file-structure)
 - [Advanced Parameters](https://github.com/michal-minarik/arse#advanced-parameters)
 
@@ -261,7 +262,7 @@ To fix this issue, open the config.json file and change this line to match your 
 
 ```"decimal_separator": ","```
 
-# Taging your events in calendar
+# Tag events in your calendar
 
 When using the calendar export feature you can add a special tag to the body of your event which will then be recognized, parsed and exported automatically to the input.xlsx file.
 
