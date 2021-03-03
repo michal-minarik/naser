@@ -50,7 +50,7 @@ If you don't have pip installed run following:
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 ``` 
 
-## Install selenium and pandas libraries
+## Install required python libraries
 
 Check if you have pandas module installed:
 
@@ -177,7 +177,7 @@ If you don't have git installed on your machine follow the official docs to get 
 
 ## Prepare the config.json
 
-Make a copy of config_sample.json and save it as config.json.
+Make a copy of config_sample.json which comes within the repository and save it as config.json.
 
 ## Publish your O365 calendar
 

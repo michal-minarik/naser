@@ -1,7 +1,7 @@
 #
 # Automated Reporting for System Engineers (A.R.S.E)
 # by Michal Minarik (mminarik@vmware.com)
-# version 1.3
+# version 1.2
 #
 
 import sys
@@ -35,7 +35,7 @@ class sfdc_is_loaded_class(object):
 
 
 print('\n*******************************************************************')
-print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.3')
+print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.2')
 print('*******************************************************************')
 
 parser = argparse.ArgumentParser()
@@ -99,9 +99,9 @@ if args.read_calendar != None:
 					related_object = matches.groups()[2]
 					related_to = matches.groups()[3]
 
-			data.append([start, activity, activityType, summary, duration, related_object, related_to, 'Completed'])
+			data.append([start, activity, activityType, summary, '', '', related_object, related_to, '', '', '', duration, 'Completed'])
 
-	df = pd.DataFrame(data, columns = ['date', 'activity', 'type', 'subject', 'hours', 'related_object', 'related_to', 'status']) 
+	df = pd.DataFrame(data, columns = ['date', 'activity', 'type', 'subject', 'notes', 'next_step', 'related_object', 'related_to', 'activity_category', 'solution', 'solution_product', 'hours', 'status']) 
 
 	df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', utc=True) 
 
