@@ -1,7 +1,7 @@
 #
 # Automated Reporting for System Engineers (A.R.S.E)
 # by Michal Minarik (mminarik@vmware.com)
-# version 1.2
+# version 1.2.1
 #
 
 import sys
@@ -19,6 +19,10 @@ import json
 import time
 import icalendar
 import requests
+from dateutil.rrule import *
+from datetime import datetime, timedelta, timezone
+
+pd.options.mode.chained_assignment = None
 
 # Class for checking if SDFC was loaded (either Lighning or Classic)
 class sfdc_is_loaded_class(object):
@@ -33,10 +37,69 @@ class sfdc_is_loaded_class(object):
 			else:
 				return False
 
+def parse_recurrences(recur_rule, start, exclusions):
+	rules = rruleset()
+	first_rule = rrulestr(recur_rule, dtstart=start)
+	rules.rrule(first_rule)
+	if not isinstance(exclusions, list):
+		exclusions = [exclusions]
+		for xdt in exclusions:
+			try:
+				rules.exdate(xdt.dt)
+			except AttributeError:
+				pass
 
-print('\n*******************************************************************')
-print('  Automated Reporting for System Engineers (A.R.S.E.) version 1.2')
-print('*******************************************************************')
+	dates = []
+
+	window_start = datetime.strptime(args.start_date + " 00:00:00+0100", '%Y-%m-%d %H:%M:%S%z')
+	window_end = datetime.strptime(args.end_date + " 23:59:59+0100", '%Y-%m-%d %H:%M:%S%z')
+
+	for rule in rules.between(window_start, window_end):
+		dates.append(rule.strftime("%Y-%m-%d %H:%M:%S"))
+	return dates
+
+def process_vevent(component, data):
+	
+	activity = ''
+	activityType = ''
+	related_object = ''
+	related_to = ''
+
+	summary = component.get('summary').strip()
+
+	start = component.get('dtstart').dt
+
+	end = component.get('dtend').dt
+	duration = round(((end - start).total_seconds() / 3600) * 2) / 2
+
+	description = component.get('description')
+
+	# Process the description
+	if description:
+		description = description.replace("\u2028", "")
+
+		matches = re.match(r"^#(e|i):(\w+):(Account|Opportunity|n/a):(.+)#$", description, re.MULTILINE)
+		if matches:
+			if matches.groups()[0] == "e":
+				activity = "EMEA SE Activity"
+			elif matches.groups()[0] == "i":
+				activity = "SE Internal Activity"
+			activityType = matches.groups()[1]
+			related_object = matches.groups()[2]
+			related_to = matches.groups()[3]
+
+	if component.get('rrule'):
+		exdate = component.get('exdate')
+		reoccur = component.get('rrule').to_ical().decode('utf-8')
+		for item in parse_recurrences(reoccur, pd.to_datetime(component.get('dtstart').dt, utc=True), exdate):
+			data.append([pd.to_datetime(item), activity, activityType, summary, '', '', related_object, related_to, '', '', '', duration, 'Completed'])
+	else:
+		data.append([start, activity, activityType, summary, '', '', related_object, related_to, '', '', '', duration, 'Completed'])
+
+	return
+
+
+print('\n + Automated Reporting for System Engineers (A.R.S.E.) version 1.2.1')
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--start-date")
@@ -63,43 +126,20 @@ if args.read_calendar != None:
 	# Get the calendar from subscribed url
 	icsFile = requests.get(configs['ics_url']).text
 
-	print(" + Processing the calendar file")
+	print(" + Processing your calendar entries")
 
 	gcal = icalendar.Calendar.from_ical(icsFile)
+
+
+	#icalfile = open('calendar.ics', 'rb')
+	#gcal = icalendar.Calendar.from_ical(icalfile.read())
+
 
 	data = []
 
 	for component in gcal.walk():
 		if component.name == "VEVENT":
-
-			activity = ''
-			activityType = ''
-			related_object = ''
-			related_to = ''
-
-			summary = component.get('summary').strip()
-
-			start = component.get('dtstart').dt
-			end = component.get('dtend').dt
-			duration = round(((end - start).total_seconds() / 3600) * 2) / 2
-
-			description = component.get('description')
-
-			# Process the description
-			if description:
-				description = description.replace("\u2028", "")
-
-				matches = re.match(r"^#(e|i):(\w+):(Account|Opportunity|n/a):(.+)#$", description, re.MULTILINE)
-				if matches:
-					if matches.groups()[0] == "e":
-						activity = "EMEA SE Activity"
-					elif matches.groups()[0] == "i":
-						activity = "SE Internal Activity"
-					activityType = matches.groups()[1]
-					related_object = matches.groups()[2]
-					related_to = matches.groups()[3]
-
-			data.append([start, activity, activityType, summary, '', '', related_object, related_to, '', '', '', duration, 'Completed'])
+			process_vevent(component, data)
 
 	df = pd.DataFrame(data, columns = ['date', 'activity', 'type', 'subject', 'notes', 'next_step', 'related_object', 'related_to', 'activity_category', 'solution', 'solution_product', 'hours', 'status']) 
 
@@ -119,9 +159,7 @@ if args.read_calendar != None:
 #
 # Wait for confimation
 #
-
-print("Is your Excel ready to be imported?")
-input()
+input(" + Is your Excel ready to be imported? ")
 
 #
 # Import to SFDC
@@ -129,10 +167,7 @@ input()
 
 df = pd.read_excel('input.xlsx')
 
-print('\nTasks to be reported:')
-print('\n------------')
-print(df)
-print('------------\n')
+print(' + ' + str(len(df)) + ' tasks will be imported to SFDC')
 
 # Get the username and password
 if args.prompt_username:
@@ -140,8 +175,8 @@ if args.prompt_username:
 	username = input()
 else:
 	username = getpass.getuser()
-	print('Your VMware username: ' + username)
-password = getpass.getpass()
+	print(' + Autodetected username is: ' + username)
+password = getpass.getpass(' + Your VMware password:')
 
 # Open Firefox and start login to SFDC
 browser = webdriver.Firefox()

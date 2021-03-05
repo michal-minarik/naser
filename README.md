@@ -208,21 +208,16 @@ The script will recap, what it will import into SFDC.
 
 
 ```bash
-Tasks to be reported:
+python arse.py
 
-------------
-                 date          activity      type       subject  hours related_object        related_to     status
-0 2020-12-02 17:30:00  EMEA SE Activity  Workshop  TEST_ACCOUNT    0.5        Account                 *  Completed
-1 2020-12-02 18:30:00  EMEA SE Activity  Workshop    TEST_OPPTY    0.5    Opportunity                 *  Completed
-------------
+ + Automated Reporting for System Engineers (A.R.S.E.) version 1.2.1
+ + Is your Excel ready to be imported? y
+ + 208 tasks will be imported to SFDC
+ + Autodetected username is: mminarik
+ + Your VMware password:
 ```
 
-Then it will autodetect your username and prompts for a password. This password is your domain password.
-
-```bash
-Your VMware username: ********
-Password: 
-```
+It will autodetect your username and prompts for a password. This password is your domain password.
 
 That's it. Now the script will open a controlled Firefox browser and load all tasks. Once it's done you will see the message:
 
@@ -236,6 +231,16 @@ If you want to export your O365 calendar you need to run the script with additio
 
 ```bash
 python arse.py --read-calendar true --start-date 2021-02-01 --end-date 2021-03-01
+
+ + Automated Reporting for System Engineers (A.R.S.E.) version 1.2.1
+ + Downloading your calendar file from O365
+ + Processing your calendar entries
+ + Exporting data to input.xlsx file
+ + Is your Excel ready to be imported? y
+ + 208 tasks will be imported to SFDC
+ + Autodetected username is: mminarik
+ + Your VMware password:
+
 ```
 
 This will export your calendar (see section Publish your O365 calendar) for necesary configuration.
