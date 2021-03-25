@@ -188,7 +188,7 @@ If you don't have git installed on your machine follow the official docs to get 
 
 ## Prepare the config.json
 
-Make a copy of config_sample.json which comes within the repository and save it as config.json.
+Make a copy of config.json.sample which comes within the repository and save it as config.json.
 
 ## Publish your O365 calendar
 
@@ -202,7 +202,7 @@ Paste this link to the config.json file as a ics_url parameter.
 
 ## Prepare input file
 
-When you cloned the repository a sample file sample_input.xlsx was created for you. Rename/duplicate this file and name it input.xlsx, keep it in the same directory. Now you can input your activities into this file.
+When you cloned the repository a sample file input.xlsx.sample was created for you. Rename/duplicate this file and name it input.xlsx, keep it in the same directory. Now you can input your activities into this file.
 
 Follow the structure from the sample file and [the input file structure](https://github.com/michal-minarik/naser#input-file-structure)
 

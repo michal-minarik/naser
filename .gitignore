@@ -10,3 +10,4 @@ meetings.xlsx
 calendar.ics
 .vscode
 config.json
+__pycache__

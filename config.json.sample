@@ -1,0 +1,19 @@
+{
+    "date_format": "%d.%m.%Y",
+    "decimal_separator": ",",
+    "ics_url": "url of your published worked calendar",
+    "calendar":
+    {
+        "exclusions": [
+            "^Private Appointment$"
+        ],
+        "mappings": [
+            {
+                "pattern": "^.*MW-MM",
+                "activity": "SE Internal Activity",
+                "type": "Meetings",
+                "notes": "Weekly one to one with my manager"
+            }
+        ]
+    }
+}

@@ -21,6 +21,8 @@ import icalendar
 import requests
 from dateutil.rrule import *
 from datetime import datetime, timedelta, timezone
+from internalActivityDetails import *
+from emeaSEActivityDetails import *
 
 pd.options.mode.chained_assignment = None
 
