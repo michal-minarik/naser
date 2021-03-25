@@ -7,6 +7,10 @@
 - [Input File Structure](https://github.com/michal-minarik/naser#input-file-structure)
 - [Advanced Parameters](https://github.com/michal-minarik/naser#advanced-parameters)
 
+# Demo
+
+Here is a demo video how it works: https://vimeo.com/528747590 
+
 # Known issues
 
 - As SFDC is changing the UI quite often, sometimes script cannot correctly autodetect if you are using SFDC Lightning or the old classic SDFC. To mitigate this issue, before running the script switch you SFDC to classic manually.
