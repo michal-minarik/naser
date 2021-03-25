@@ -1,4 +1,4 @@
-# New Automated Reporting for System Engineers (N.A.S.E.R)
+# New Automated System Engineers Reporting (N.A.S.E.R)
 
 - [Installation](https://github.com/michal-minarik/naser#installation)
 - [Getting Started](https://github.com/michal-minarik/naser#getting-started)
@@ -203,7 +203,7 @@ You are all set to run the script. Navigate to the directory where you cloned th
 ```bash
 python naser.py
 
- + New Automated Reporting for System Engineers (N.A.S.E.R) version 1.2.1
+ + New Automated System Engineers Reporting (N.A.S.E.R) version 1.2.1
  + Is your Excel ready to be imported? y
  + 208 tasks will be imported to SFDC
  + Autodetected username is: mminarik
@@ -225,7 +225,7 @@ If you want to export your O365 calendar you need to run the script with additio
 ```bash
 python naser.py --read-calendar true --start-date 2021-02-01 --end-date 2021-03-01
 
- + New Automated Reporting for System Engineers (N.A.S.E.R) version 1.2.1
+ + New Automated System Engineers Reporting (N.A.S.E.R) version 1.2.1
  + Downloading your calendar file from O365
  + Processing your calendar entries
  + Exporting data to input.xlsx file

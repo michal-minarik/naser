@@ -1,5 +1,5 @@
 #
-# New Automated Reporting for System Engineers (N.A.S.E.R)
+# New Automated System Engineers Reporting (N.A.S.E.R)
 # by Michal Minarik (mminarik@vmware.com)
 # version 1.2.1
 #
@@ -117,7 +117,7 @@ def process_vevent(component, data):
 	return
 
 
-print('\n + New Automated Reporting for System Engineers (N.A.S.E.R) version 1.2.1')
+print('\n + New Automated System Engineers Reporting (N.A.S.E.R) version 1.2.1')
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--start-date")
