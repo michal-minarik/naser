@@ -1,5 +1,5 @@
 #
-# Automated Reporting for System Engineers (A.R.S.E)
+# New Automated Reporting for System Engineers (N.A.S.E.R)
 # by Michal Minarik (mminarik@vmware.com)
 # version 1.2.1
 #
@@ -64,8 +64,26 @@ def process_vevent(component, data):
 	activityType = ''
 	related_object = ''
 	related_to = ''
+	notes = ''
 
 	summary = component.get('summary').strip()
+
+	# Process exlusions
+	for exclusion in configs['calendar']['exclusions']:
+		matches = re.match(exclusion, summary, re.MULTILINE)
+		if matches:
+			return
+
+	# Process automatic mappings
+	for mapping in configs['calendar']['mappings']:
+		matches = re.match(mapping['pattern'], summary, re.MULTILINE)
+		if matches:
+			activity = mapping.get('activity')
+			activityType = mapping.get('type')
+			notes = mapping.get('notes')
+			related_object = mapping.get('related_object')
+			related_to = mapping.get('related_to')
+	
 
 	start = component.get('dtstart').dt
 
@@ -78,7 +96,7 @@ def process_vevent(component, data):
 	if description:
 		description = description.replace("\u2028", "")
 
-		matches = re.match(r"^#(e|i):(\w+):(Account|Opportunity|n/a):(.+)#$", description, re.MULTILINE)
+		matches = re.match(r"^#(e|i):(.+):(Account|Opportunity|Nothing):(.+)#$", description, re.MULTILINE)
 		if matches:
 			if matches.groups()[0] == "e":
 				activity = "EMEA SE Activity"
@@ -92,14 +110,14 @@ def process_vevent(component, data):
 		exdate = component.get('exdate')
 		reoccur = component.get('rrule').to_ical().decode('utf-8')
 		for item in parse_recurrences(reoccur, pd.to_datetime(component.get('dtstart').dt, utc=True), exdate):
-			data.append([pd.to_datetime(item), activity, activityType, summary, '', '', related_object, related_to, '', '', '', duration, 'Completed'])
+			data.append([pd.to_datetime(item), activity, activityType, summary, notes, '', related_object, related_to, '', '', '', duration, 'Completed'])
 	else:
-		data.append([start, activity, activityType, summary, '', '', related_object, related_to, '', '', '', duration, 'Completed'])
+		data.append([start, activity, activityType, summary, notes, '', related_object, related_to, '', '', '', duration, 'Completed'])
 
 	return
 
 
-print('\n + Automated Reporting for System Engineers (A.R.S.E.) version 1.2.1')
+print('\n + New Automated Reporting for System Engineers (N.A.S.E.R) version 1.2.1')
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--start-date")
