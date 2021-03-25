@@ -7,6 +7,12 @@
 - [Input File Structure](https://github.com/michal-minarik/naser#input-file-structure)
 - [Advanced Parameters](https://github.com/michal-minarik/naser#advanced-parameters)
 
+# Known issues
+
+- As SFDC is changing the UI quite often, sometimes script cannot correctly autodetect if you are using SFDC Lightning or the old classic SDFC. To mitigate this issue, before running the script switch you SFDC to classic manually.
+- You must be connected to VPN - script cannot continue if Workspace ONE Access prompts for RSA MFA.
+- The script also works with your username and password. If you have certificate imported to Firefox is won't be able to log you in.
+
 # Installation
 
 ## Install Python
