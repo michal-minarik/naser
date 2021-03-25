@@ -1,11 +1,11 @@
 # New Automated Reporting for System Engineers (N.A.S.E.R)
 
-- [Installation](https://github.com/michal-minarik/arse#installation)
-- [Getting Started](https://github.com/michal-minarik/arse#getting-started)
-- [Customize Localization](https://github.com/michal-minarik/arse#customize-localization)
-- [Tag events in your calendar](https://github.com/michal-minarik/arse#tag-events-in-your-calendar)
-- [Input File Structure](https://github.com/michal-minarik/arse#input-file-structure)
-- [Advanced Parameters](https://github.com/michal-minarik/arse#advanced-parameters)
+- [Installation](https://github.com/michal-minarik/naser#installation)
+- [Getting Started](https://github.com/michal-minarik/naser#getting-started)
+- [Customize Localization](https://github.com/michal-minarik/naser#customize-localization)
+- [Tag events in your calendar](https://github.com/michal-minarik/naser#tag-events-in-your-calendar)
+- [Input File Structure](https://github.com/michal-minarik/naser#input-file-structure)
+- [Advanced Parameters](https://github.com/michal-minarik/naser#advanced-parameters)
 
 # Installation
 
@@ -172,7 +172,7 @@ You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 
 You will need multiple files in a single directory. The easiest way how to get this done is to clone this git repository. To do so run this command:
 
-```git clone https://github.com/michal-minarik/arse.git```
+```git clone https://github.com/michal-minarik/naser.git```
 
 If you don't have git installed on your machine follow the official docs to get it.
 
@@ -194,14 +194,14 @@ Paste this link to the config.json file as a ics_url parameter.
 
 When you cloned the repository a sample file sample_input.xlsx was created for you. Rename/duplicate this file and name it input.xlsx, keep it in the same directory. Now you can input your activities into this file.
 
-Follow the structure from the sample file and [the input file structure](https://github.com/michal-minarik/arse#input-file-structure)
+Follow the structure from the sample file and [the input file structure](https://github.com/michal-minarik/naser#input-file-structure)
 
 ## Basic usage
 
 You are all set to run the script. Navigate to the directory where you cloned the repository and execute:
 
 ```bash
-python arse.py
+python naser.py
 
  + New Automated Reporting for System Engineers (N.A.S.E.R) version 1.2.1
  + Is your Excel ready to be imported? y
@@ -223,7 +223,7 @@ Reporting done
 If you want to export your O365 calendar you need to run the script with additional arguments.
 
 ```bash
-python arse.py --read-calendar true --start-date 2021-02-01 --end-date 2021-03-01
+python naser.py --read-calendar true --start-date 2021-02-01 --end-date 2021-03-01
 
  + New Automated Reporting for System Engineers (N.A.S.E.R) version 1.2.1
  + Downloading your calendar file from O365
@@ -262,7 +262,7 @@ To fix this issue, open the config.json file and change this line to match your 
 
 # Tag events in your calendar
 
-When using the calendar export feature you can add a special tag to the body of your event which will then be recognized, parsed and exported automatically to the input.xlsx file.
+When using the calendar export feature you can add a special tag to the body of your event which will then be recognized, pnaserd and exported automatically to the input.xlsx file.
 
 Here are the options for internal activity:
 
@@ -287,17 +287,17 @@ Following fields are mandatory and must be filled:
 | ------------- | ------------- | ------------- |
 | date  | Activity date | Date |
 | activity  | Internal or normal activity definition  | EMEA SE Activity |
-| type  | Activity type  | [EMEA SE Activity - type values](https://github.com/michal-minarik/arse#emea-se-activity---type-values) |
+| type  | Activity type  | [EMEA SE Activity - type values](https://github.com/michal-minarik/naser#emea-se-activity---type-values) |
 | subject  | Activity subject  | Text |
 | notes  | Notes / Comments  | Text (Optional) |
 | next_step  | Next step  | Text (Optional) |
-| related_object  | Related to SFDC type  | [EMEA SE Activity - related_object values](https://github.com/michal-minarik/arse#emea-se-activity---related_object-values) |
+| related_object  | Related to SFDC type  | [EMEA SE Activity - related_object values](https://github.com/michal-minarik/naser#emea-se-activity---related_object-values) |
 | related_to  | Related to SFDC resource  | Text (exact name of the SFDC resource e.g. opportunity name) |
 | activity_category  | Activity Category  | Values in SFDC (Optional) |
 | solution  | Solution  | Values in SFDC (Optional) |
 | solution_product  | Product  | Values in SFDC (Optional) |
 | hours  | Worked hours  | Integer |
-| status  | Task status  | [EMEA SE Activity - status values](https://github.com/michal-minarik/arse#emea-se-activity---status-values)  |
+| status  | Task status  | [EMEA SE Activity - status values](https://github.com/michal-minarik/naser#emea-se-activity---status-values)  |
 
 #### EMEA SE Activity - type values
 
@@ -350,11 +350,11 @@ Following fields are mandatory and must be filled:
 | ------------- | ------------- | ------------- |
 | date  | Activity date | Date |
 | activity  | Internal or normal activity definition  | SE Internal Activity |
-| type  | Activity type  | [SE Internal Activity - type values](https://github.com/michal-minarik/arse#se-internal-activity---type-values) |
+| type  | Activity type  | [SE Internal Activity - type values](https://github.com/michal-minarik/naser#se-internal-activity---type-values) |
 | subject  | Activity subject  | Text |
 | notes  | Notes / Comments  | Text (Optional) |
 | hours  | Worked hours  | Integer |
-| status  | Task status  | [SE Internal Activity - status values](https://github.com/michal-minarik/arse#se-internal-activity---status-values)  |
+| status  | Task status  | [SE Internal Activity - status values](https://github.com/michal-minarik/naser#se-internal-activity---status-values)  |
 
 
 #### SE Internal Activity - type values
@@ -385,5 +385,5 @@ Following fields are mandatory and must be filled:
 If the script does not detect your username correctly (for example you are not running corporate image), you can force a username prompt:
 
 ```bash
-python arse.py --prompt-username
+python naser.py --prompt-username
 ```
